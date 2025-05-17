@@ -1,0 +1,41 @@
+{
+    "categoryName": "B737NG Qualification",
+    "eventName": "Traffic Air Management training",
+    "slotGroups": [
+        {
+            "slotGroupName": "Instructor",
+            "resources": [
+                {
+                    "firstName": "Ricardo",
+                    "name": "Delgado",
+                    "userId": "rdelgado",
+                    "photo": "https://randomuser.me/api/portraits/men/97.jpg",
+                    "certificates": []
+                }
+            ]
+        },
+        {
+            "slotGroupName": "Observer",
+            "resources": [
+                {
+                    "firstName": "Aarav",
+                    "name": "Patel",
+                    "userId": "apatel",
+                    "photo": "https://randomuser.me/api/portraits/men/4.jpg",
+                    "certificates": [
+                        "AvSafety seminar",
+                        "Flight instruments",
+                        "Flight simulator"
+                    ]
+                },
+                {
+                    "firstName": "Veri",
+                    "name": "Setiawan",
+                    "userId": "vsetiawan",
+                    "photo": "https://uifaces.co/our-content/donated/AW-rdWlG.jpg",
+                    "certificates": []
+                }
+            ]
+        }
+    ]
+}
