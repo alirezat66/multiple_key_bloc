@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_bloc.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_event.dart';
-import 'package:user_list/features/event_details/presentation/bloc/event_state.dart';
 import 'package:user_list/features/event_details/presentation/cubit/toggle_cubit.dart';
 import 'package:user_list/features/event_details/presentation/cubit/toggle_state.dart';
 
@@ -17,10 +16,10 @@ class CustomSearchBar extends StatefulWidget {
   });
 
   @override
-  _CustomSearchBarState createState() => _CustomSearchBarState();
+  CustomSearchBarState createState() => CustomSearchBarState();
 }
 
-class _CustomSearchBarState extends State<CustomSearchBar>
+class CustomSearchBarState extends State<CustomSearchBar>
     with TickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double> _cancelButtonAnimation;

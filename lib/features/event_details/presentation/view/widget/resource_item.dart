@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_list/features/event_details/domain/entities/resource_entity.dart';
 import 'package:user_list/features/event_details/presentation/view/widget/certificate_list.dart';
 
@@ -9,11 +8,11 @@ class ResourceItem extends StatelessWidget {
   final VoidCallback onToggle;
 
   const ResourceItem({
-    Key? key,
+    super.key,
     required this.resource,
     required this.isExpanded,
     required this.onToggle,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

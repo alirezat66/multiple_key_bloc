@@ -19,10 +19,10 @@ class ResourceListPage extends StatefulWidget {
   });
 
   @override
-  _ResourceListPageState createState() => _ResourceListPageState();
+  ResourceListPageState createState() => ResourceListPageState();
 }
 
-class _ResourceListPageState extends State<ResourceListPage> {
+class ResourceListPageState extends State<ResourceListPage> {
   final TextEditingController _searchController = TextEditingController();
 
   @override

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:user_list/core/extensions/theme_extension.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_bloc.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_event.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_state.dart';
@@ -71,7 +72,7 @@ class EventDetailPageState extends State<EventDetailPage>
           backgroundColor: Colors.white,
           elevation: 0,
           leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.black),
+            icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
             onPressed: () {
               Navigator.of(context).pop();
             },
@@ -117,6 +118,7 @@ class EventDetailPageState extends State<EventDetailPage>
               return Center(child: Text('Error: ${state.errorMessage}'));
             } else if (state.event != null && _slotGroupNames.isNotEmpty) {
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Tab bar
                   TabBar(
@@ -145,9 +147,9 @@ class EventDetailPageState extends State<EventDetailPage>
                           ),
                           TextSpan(
                             text: state.event!.eventName,
-                            style: const TextStyle(
+                            style: TextStyle(
                               fontSize: 16.0,
-                              color: Colors.blue,
+                              color: context.colorScheme.secondary,
                               fontWeight: FontWeight.w500,
                             ),
                           ),
