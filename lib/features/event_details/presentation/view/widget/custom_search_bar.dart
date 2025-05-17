@@ -65,8 +65,7 @@ class CustomSearchBarState extends State<CustomSearchBar>
         }
       },
       child: Container(
-        height: 50,
-        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         child: Row(
           children: [
             Expanded(

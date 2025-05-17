@@ -29,9 +29,21 @@ class ResourceItem extends StatelessWidget {
               child: Row(
                 children: [
                   // Profile image
-                  CircleAvatar(
-                    radius: 24,
-                    backgroundImage: NetworkImage(resource.photo),
+                  Container(
+                    padding: const EdgeInsets.all(4.0),
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      border: Border.all(
+                        color: Color(
+                          0xFFC0C0C0,
+                        ), // Or a specific color from your theme
+                        width: 1.0,
+                      ),
+                    ),
+                    child: CircleAvatar(
+                      radius: 24,
+                      backgroundImage: NetworkImage(resource.photo),
+                    ),
                   ),
                   const SizedBox(width: 16.0),
                   // User info
@@ -50,7 +62,7 @@ class ResourceItem extends StatelessWidget {
                           resource.userId,
                           style: TextStyle(
                             fontSize: 14.0,
-                            color: Colors.grey[600],
+                            color: Color(0XFFA8A7A8),
                           ),
                         ),
                       ],
