@@ -7,8 +7,10 @@ abstract class EventEvent extends Equatable {
   List<Object?> get props => [];
 }
 
+/// Event to load the initial event data
 class LoadEventEvent extends EventEvent {}
 
+/// Event to select a slot group (tab)
 class SelectSlotGroupEvent extends EventEvent {
   final String slotGroupName;
 
@@ -18,12 +20,12 @@ class SelectSlotGroupEvent extends EventEvent {
   List<Object?> get props => [slotGroupName];
 }
 
+/// Event to perform a search
 class SearchEvent extends EventEvent {
   final String query;
-  final String tabId;
 
-  const SearchEvent({required this.query, required this.tabId});
+  const SearchEvent({required this.query});
 
   @override
-  List<Object?> get props => [query, tabId];
+  List<Object?> get props => [query];
 }

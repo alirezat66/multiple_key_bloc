@@ -20,7 +20,7 @@ class EventBloc extends Bloc<EventEvent, EventState> {
     );
   }
 
-  // Custom transformer that debounces per tab
+  /// Custom transformer that debounces search events
   EventTransformer<T> _debounceSearchEvents<T extends EventEvent>(
     Duration duration,
   ) {
@@ -39,11 +39,14 @@ class EventBloc extends Bloc<EventEvent, EventState> {
     };
   }
 
+  /// Handle loading the event
   void _onLoadEvent(LoadEventEvent event, Emitter<EventState> emit) async {
     emit(state.copyWith(isLoading: true, errorMessage: null));
 
     try {
       final eventData = await getEvent();
+
+      // Select the first slot group by default
       final selectedSlotGroup =
           eventData.slotGroups.isNotEmpty
               ? eventData.slotGroups.first.slotGroupName
@@ -57,11 +60,8 @@ class EventBloc extends Bloc<EventEvent, EventState> {
         ),
       );
 
-      // Initialize search for each slot group
-      for (final slotGroup in eventData.slotGroups) {
-        final tabId = 'tab_${slotGroup.slotGroupName}';
-        add(SearchEvent(query: '', tabId: tabId));
-      }
+      // Initialize search with empty query for the selected slot group
+      add(SearchEvent(query: ''));
     } catch (e) {
       emit(
         state.copyWith(
@@ -72,64 +72,47 @@ class EventBloc extends Bloc<EventEvent, EventState> {
     }
   }
 
+  /// Handle selecting a slot group (tab)
   void _onSelectSlotGroup(
     SelectSlotGroupEvent event,
     Emitter<EventState> emit,
   ) {
-    emit(state.copyWith(selectedSlotGroup: event.slotGroupName));
+    if (state.selectedSlotGroup != event.slotGroupName) {
+      emit(state.copyWith(selectedSlotGroup: event.slotGroupName));
+
+      // Trigger search with current query for the newly selected slot group
+      add(SearchEvent(query: state.searchQuery));
+    }
   }
 
+  /// Handle search operation
   void _onSearch(SearchEvent event, Emitter<EventState> emit) async {
-    // Get current tab's search state or create a new one
-    final currentTabState = state.getSearchStateForTab(event.tabId);
-
-    // Start loading if needed
-    if (!currentTabState.isLoading) {
-      emit(
-        state.updateTabSearchState(
-          event.tabId,
-          currentTabState.copyWith(isLoading: true, errorMessage: null),
-        ),
-      );
-    }
+    // Update search query in state
+    emit(
+      state.copyWith(
+        searchQuery: event.query,
+        isSearching: true,
+        searchError: null,
+      ),
+    );
 
     try {
-      // Get slot group name from tab ID
-      final slotGroupName =
-          event.tabId.startsWith('tab_')
-              ? event.tabId.substring(4)
-              : state.selectedSlotGroup;
-
-      // Perform search with the slot ID as filter
+      // Perform search with the current slot group
       final resources = await searchResources(
         query: event.query,
-        slotGroupName: slotGroupName,
+        slotGroupName: state.selectedSlotGroup,
       );
 
-      emit(
-        state.updateTabSearchState(
-          event.tabId,
-          currentTabState.copyWith(isLoading: false, resources: resources),
-        ),
-      );
+      emit(state.copyWith(searchResults: resources, isSearching: false));
     } on AppException catch (e) {
       emit(
-        state.updateTabSearchState(
-          event.tabId,
-          currentTabState.copyWith(
-            isLoading: false,
-            errorMessage: e.userFriendlyMessage,
-          ),
-        ),
+        state.copyWith(isSearching: false, searchError: e.userFriendlyMessage),
       );
     } catch (e) {
       emit(
-        state.updateTabSearchState(
-          event.tabId,
-          currentTabState.copyWith(
-            isLoading: false,
-            errorMessage: 'Search failed: ${e.toString()}',
-          ),
+        state.copyWith(
+          isSearching: false,
+          searchError: 'Search failed: ${e.toString()}',
         ),
       );
     }

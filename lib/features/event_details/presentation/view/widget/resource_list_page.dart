@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+/* import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_bloc.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_event.dart';
@@ -29,7 +29,7 @@ class ResourceListPageState extends State<ResourceListPage> {
      // Trigger search when the page is created
      WidgetsBinding.instance.addPostFrameCallback((_) {
        context.read<EventBloc>().add(
-         SearchEvent(query: '', tabId: widget.tabId),
+         SearchEvent(query: '',),
        );
      });
    }
@@ -112,3 +112,4 @@ class ResourceListPageState extends State<ResourceListPage> {
      );
    }
  }
+ */

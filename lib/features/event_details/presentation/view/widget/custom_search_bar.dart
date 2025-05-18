@@ -39,9 +39,7 @@ class CustomSearchBarState extends State<CustomSearchBar>
   }
 
   void _onSearchChanged() {
-    context.read<EventBloc>().add(
-      SearchEvent(query: widget.controller.text, tabId: widget.tabId),
-    );
+    context.read<EventBloc>().add(SearchEvent(query: widget.controller.text));
   }
 
   @override

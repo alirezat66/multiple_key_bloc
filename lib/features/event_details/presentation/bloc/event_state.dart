@@ -9,43 +9,43 @@ class EventState extends Equatable {
   final String selectedSlotGroup;
   final String? errorMessage;
 
-  // Search results per tab
-  final Map<String, TabSearchState> tabSearchStates;
+  // Search related fields
+  final String searchQuery;
+  final bool isSearching;
+  final List<ResourceEntity> searchResults;
+  final String? searchError;
 
   const EventState({
     this.isLoading = false,
     this.event,
     this.selectedSlotGroup = '',
-    this.tabSearchStates = const {},
     this.errorMessage,
+    this.searchQuery = '',
+    this.isSearching = false,
+    this.searchResults = const [],
+    this.searchError,
   });
 
   EventState copyWith({
     bool? isLoading,
     EventEntity? event,
     String? selectedSlotGroup,
-    Map<String, TabSearchState>? tabSearchStates,
     String? errorMessage,
+    String? searchQuery,
+    bool? isSearching,
+    List<ResourceEntity>? searchResults,
+    String? searchError,
   }) {
     return EventState(
       isLoading: isLoading ?? this.isLoading,
       event: event ?? this.event,
       selectedSlotGroup: selectedSlotGroup ?? this.selectedSlotGroup,
-      tabSearchStates: tabSearchStates ?? this.tabSearchStates,
       errorMessage: errorMessage,
+      searchQuery: searchQuery ?? this.searchQuery,
+      isSearching: isSearching ?? this.isSearching,
+      searchResults: searchResults ?? this.searchResults,
+      searchError: searchError,
     );
-  }
-
-  // Helper to get search state for a specific tab
-  TabSearchState getSearchStateForTab(String tabId) {
-    return tabSearchStates[tabId] ?? const TabSearchState();
-  }
-
-  // Helper to update search state for a specific tab
-  EventState updateTabSearchState(String tabId, TabSearchState state) {
-    final newTabStates = Map<String, TabSearchState>.from(tabSearchStates);
-    newTabStates[tabId] = state;
-    return copyWith(tabSearchStates: newTabStates);
   }
 
   @override
@@ -53,35 +53,10 @@ class EventState extends Equatable {
     isLoading,
     event,
     selectedSlotGroup,
-    tabSearchStates,
     errorMessage,
+    searchQuery,
+    isSearching,
+    searchResults,
+    searchError,
   ];
-}
-
-// Search state for each tab
-class TabSearchState extends Equatable {
-  final bool isLoading;
-  final List<ResourceEntity> resources;
-  final String? errorMessage;
-
-  const TabSearchState({
-    this.isLoading = false,
-    this.resources = const [],
-    this.errorMessage,
-  });
-
-  TabSearchState copyWith({
-    bool? isLoading,
-    List<ResourceEntity>? resources,
-    String? errorMessage,
-  }) {
-    return TabSearchState(
-      isLoading: isLoading ?? this.isLoading,
-      resources: resources ?? this.resources,
-      errorMessage: errorMessage,
-    );
-  }
-
-  @override
-  List<Object?> get props => [isLoading, resources, errorMessage];
 }
