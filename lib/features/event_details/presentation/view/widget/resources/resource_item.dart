@@ -16,87 +16,74 @@ class ResourceItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // User profile and info
-        Material(
-          color: Colors.transparent,
-          child: InkWell(
-            onTap: resource.certificates.isNotEmpty ? onToggle : null,
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                children: [
-                  // Profile image
-                  Container(
-                    padding: const EdgeInsets.all(4.0),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      border: Border.all(
-                        color: Color(
-                          0xFFC0C0C0,
-                        ), // Or a specific color from your theme
-                        width: 1.0,
-                      ),
-                    ),
-                    child: CircleAvatar(
-                      radius: 24,
-                      backgroundImage: NetworkImage(resource.photo),
-                    ),
-                  ),
-                  const SizedBox(width: 16.0),
-                  // User info
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          '${resource.firstName} ${resource.name}',
-                          style: const TextStyle(
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Text(
-                          resource.userId,
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Color(0XFFA8A7A8),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  // Arrow icon if there are certificates
-                  if (resource.certificates.isNotEmpty)
-                    AnimatedRotation(
-                      turns: isExpanded ? 0.5 : 0.0,
-                      duration: const Duration(milliseconds: 300),
-                      child: Icon(
-                        Icons.keyboard_arrow_down,
-                        color: Colors.grey[600],
-                      ),
-                    ),
-                ],
+    final hasCertificates = resource.certificates.isNotEmpty;
+
+    Widget titleWidget = Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          // Profile image
+          Container(
+            padding: const EdgeInsets.all(4.0),
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              border: Border.all(
+                color: Color(0xFFC0C0C0), // Or a specific color from your theme
+                width: 1.0,
               ),
             ),
+            child: CircleAvatar(
+              radius: 24,
+              backgroundImage: NetworkImage(resource.photo),
+            ),
           ),
-        ),
-        // Certificates list with improved animation
-        if (resource.certificates.isNotEmpty)
-          AnimatedCrossFade(
-            firstChild: const SizedBox(height: 0),
-            secondChild: CertificateList(certificates: resource.certificates),
-            crossFadeState:
-                isExpanded
-                    ? CrossFadeState.showSecond
-                    : CrossFadeState.showFirst,
-            duration: const Duration(milliseconds: 300),
+          const SizedBox(width: 16.0),
+          // User info
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '${resource.firstName} ${resource.name}',
+                  style: const TextStyle(
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  resource.userId,
+                  style: TextStyle(fontSize: 14.0, color: Color(0XFFA8A7A8)),
+                ),
+              ],
+            ),
           ),
-        // Divider
-        const Divider(height: 1),
-      ],
+        ],
+      ),
     );
+
+    if (hasCertificates) {
+      return Theme(
+        data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+        child: ExpansionTile(
+          tilePadding: EdgeInsets.only(right: 16),
+          childrenPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 0),
+          title: titleWidget,
+          initiallyExpanded: isExpanded,
+          onExpansionChanged: (expanded) {
+            onToggle();
+          },
+          children: [
+            CertificateList(certificates: resource.certificates),
+            SizedBox(height: 16),
+          ],
+        ),
+      );
+    } else {
+      // Render a non-expandable widget if there are no certificates
+      return Padding(
+        padding: const EdgeInsets.only(top: 16),
+        child: titleWidget,
+      );
+    }
   }
 }

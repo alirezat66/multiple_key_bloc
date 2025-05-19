@@ -12,13 +12,14 @@ class CertificateList extends StatelessWidget {
       children: [
         Container(
           width: double.infinity,
-          color: Colors.blue,
+          color: Color(0xFF0060C0),
           padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
           child: const Text(
             'Certificates',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
           ),
         ),
+        SizedBox(height: 12),
         ...certificates.map(
           (certificate) => Container(
             decoration: BoxDecoration(
@@ -29,18 +30,13 @@ class CertificateList extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(
               horizontal: 16.0,
-              vertical: 12.0,
+              vertical: 4.0,
             ),
-            child: Row(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Icon(Icons.verified, color: Colors.blue, size: 20),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: Text(
-                    certificate,
-                    style: const TextStyle(fontSize: 14),
-                  ),
-                ),
+                Text(certificate, style: const TextStyle(fontSize: 14)),
+                Divider(),
               ],
             ),
           ),
