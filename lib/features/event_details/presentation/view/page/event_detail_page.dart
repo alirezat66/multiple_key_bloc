@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:user_list/core/extensions/theme_extension.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_bloc.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_event.dart';
 import 'package:user_list/features/event_details/presentation/bloc/event_state.dart';
-import 'package:user_list/features/event_details/presentation/view/widget/event_header.dart';
-import 'package:user_list/features/event_details/presentation/view/widget/event_tab_bar.dart';
-import 'package:user_list/features/event_details/presentation/view/widget/event_search_bar.dart'; // Import the new search bar widget
 import 'package:user_list/features/event_details/presentation/view/widget/event_detail_view.dart';
 import 'package:user_list/features/event_details/presentation/view/widget/loading_widget.dart';
 
-import 'package:user_list/features/event_details/presentation/view/widget/resources/resource_list_view.dart';
 
 class EventDetailPage extends StatefulWidget {
   const EventDetailPage({super.key});
