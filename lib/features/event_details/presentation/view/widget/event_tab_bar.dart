@@ -15,6 +15,7 @@ class EventTabBar extends StatelessWidget {
     return TabBar(
       controller: tabController,
       isScrollable: true,
+      tabAlignment: TabAlignment.start,
       tabs: tabNames.map((name) => Tab(text: name)).toList(),
       labelColor: Colors.black,
       unselectedLabelColor: Colors.grey,
