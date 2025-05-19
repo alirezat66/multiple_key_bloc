@@ -1,5 +1,4 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:user_list/core/error/exceptions.dart';
 import 'package:user_list/features/event_details/domain/usecase/get_event.dart';
 import 'package:user_list/features/event_details/domain/usecase/search_resources.dart';
@@ -14,30 +13,9 @@ class EventBloc extends Bloc<EventEvent, EventState> {
     : super(const EventState()) {
     on<LoadEventEvent>(_onLoadEvent);
     on<SelectSlotGroupEvent>(_onSelectSlotGroup);
-    on<SearchEvent>(
-      _onSearch,
-      transformer: _debounceSearchEvents(const Duration(milliseconds: 300)),
-    );
+    on<SearchEvent>(_onSearch);
   }
 
-  /// Custom transformer that debounces search events
-  EventTransformer<T> _debounceSearchEvents<T extends EventEvent>(
-    Duration duration,
-  ) {
-    return (events, mapper) {
-      return events.switchMap((event) {
-        // Apply debouncing only to SearchEvents
-        if (event is SearchEvent) {
-          return Stream.value(
-            event,
-          ).debounceTime(duration).flatMap((e) => mapper(e));
-        } else {
-          // Pass through other events immediately
-          return mapper(event);
-        }
-      });
-    };
-  }
 
   /// Handle loading the event
   void _onLoadEvent(LoadEventEvent event, Emitter<EventState> emit) async {
