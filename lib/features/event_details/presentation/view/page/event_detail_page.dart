@@ -7,8 +7,9 @@ import 'package:user_list/features/event_details/presentation/bloc/event_state.d
 import 'package:user_list/features/event_details/presentation/view/widget/event_header.dart';
 import 'package:user_list/features/event_details/presentation/view/widget/event_tab_bar.dart';
 import 'package:user_list/features/event_details/presentation/view/widget/event_search_bar.dart'; // Import the new search bar widget
+import 'package:user_list/features/event_details/presentation/view/widget/loading_widget.dart';
 
-import 'package:user_list/features/event_details/presentation/view/widget/resource_list_view.dart';
+import 'package:user_list/features/event_details/presentation/view/widget/resources/resource_list_view.dart';
 
 class EventDetailPage extends StatefulWidget {
   const EventDetailPage({super.key});
@@ -85,12 +86,12 @@ class EventDetailPageState extends State<EventDetailPage>
           builder: (context, state) {
             return state.event != null
                 ? Text(
-                   state.event!.categoryName,
-                   style: const TextStyle(
-                     color: Colors.black,
-                     fontWeight: FontWeight.bold,
-                   ),
-                 )
+                  state.event!.categoryName,
+                  style: const TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                )
                 : const SizedBox();
           },
         ),
@@ -114,9 +115,9 @@ class EventDetailPageState extends State<EventDetailPage>
                 previous.event != current.event,
         builder: (context, state) {
           if (state.isLoading) {
-            return const Center(child: CircularProgressIndicator());
+            return const LoadingWidget();
           } else if (state.errorMessage != null) {
-            return Center(child: Text('Error: ${state.errorMessage}'));
+            return ErrorWidget(state.errorMessage!);
           } else if (state.event != null && _slotGroupNames.isNotEmpty) {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,9 +128,7 @@ class EventDetailPageState extends State<EventDetailPage>
                 ),
 
                 // Search Bar
-                EventSearchBar(
-                  onSearchChanged: _onSearchChanged,
-                ),
+                EventSearchBar(onSearchChanged: _onSearchChanged),
 
                 // Event name
                 EventHeader(eventName: state.event!.eventName),

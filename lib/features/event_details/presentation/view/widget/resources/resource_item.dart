@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:user_list/features/event_details/domain/entities/resource_entity.dart';
-import 'package:user_list/features/event_details/presentation/view/widget/certificate_list.dart';
+import 'package:user_list/features/event_details/presentation/view/widget/resources/certificate_list.dart';
 
 class ResourceItem extends StatelessWidget {
   final ResourceEntity resource;

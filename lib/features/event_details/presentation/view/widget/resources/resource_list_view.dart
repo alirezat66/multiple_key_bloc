@@ -4,7 +4,7 @@ import 'package:user_list/features/event_details/presentation/bloc/event_bloc.da
 import 'package:user_list/features/event_details/presentation/bloc/event_state.dart';
 import 'package:user_list/features/event_details/presentation/cubit/toggle_cubit.dart';
 import 'package:user_list/features/event_details/presentation/cubit/toggle_state.dart';
-import 'package:user_list/features/event_details/presentation/view/widget/resource_item.dart';
+import 'package:user_list/features/event_details/presentation/view/widget/resources/resource_item.dart';
 
 class ResourceListView extends StatelessWidget {
   final String slotGroupName;
